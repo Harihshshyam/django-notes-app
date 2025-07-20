@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # K8s Kind Voting App
 
 A comprehensive guide for setting up a Kubernetes cluster using Kind on an AWS EC2 instance, installing and configuring Argo CD, and deploying applications using Argo CD.
@@ -58,3 +59,35 @@ This project description emphasizes your role in leveraging AWS EC2, Kubernetes,
 ### Aapke DevOps Wale Bhaiya
 ### [TrainWithShubham](https://www.trainwithshubham.com/)
 
+=======
+# Simple Notes App for TWS Community
+This is a simple notes app built with React and Django.
+
+## Requirements
+1. Python 3.9
+2. Node.js
+3. React
+
+## Installation
+1. Clone the repository
+```
+git clone https://github.com/LondheShubham153/django-notes-app.git
+```
+
+2. Build the app
+```
+docker build -t notes-app .
+```
+
+3. Run the app
+```
+docker run -d -p 8000:8000 notes-app:latest
+```
+
+## Nginx
+
+Install Nginx reverse proxy to make this application available
+
+`sudo apt-get update`
+`sudo apt install nginx`
+>>>>>>> 45192ce33f2341666cd1a9375d0c1b65a2a17537
