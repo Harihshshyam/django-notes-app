@@ -1,0 +1,42 @@
+name: Deploy Voting App to Kind
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker images
+        run: |
+          docker build -t voting-app:latest .
+          # अगर आप DockerHub या ACR इस्तेमाल करना चाहते हैं तो push कर सकते हैं
+
+      - name: Set up Kind cluster
+        uses: engineerd/setup-kind@v0.5.0
+        with:
+          version: v0.20.0
+
+      - name: Load image into kind
+        run: kind load docker-image voting-app:latest --name kind
+
+      - name: Apply Kubernetes Manifests
+        run: kubectl apply -f k8s-specifications/
+
+      - name: Kubernetes Port-forward vote service
+        uses: vbem/k8s-port-forward@v1
+        with:
+          workload: svc/vote
+          mappings: "3001:80"
+
+      - name: Test vote UI reachable
+        run: curl -s http://52.66.39.1:3001/health || exit 1
+
